@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "skills.html",
+    "href": "skills.html",
+    "title": "Technical Skills",
+    "section": "",
+    "text": "C++, Python, SQL, Bash/PowerShell"
+  },
+  {
+    "objectID": "skills.html#languages",
+    "href": "skills.html#languages",
+    "title": "Technical Skills",
+    "section": "",
+    "text": "C++, Python, SQL, Bash/PowerShell"
+  },
+  {
+    "objectID": "skills.html#frameworks-libraries",
+    "href": "skills.html#frameworks-libraries",
+    "title": "Technical Skills",
+    "section": "Frameworks & Libraries",
+    "text": "Frameworks & Libraries\n\nCirq, Qiskit\nTesting: gtest / pytest"
+  },
+  {
+    "objectID": "skills.html#tools",
+    "href": "skills.html#tools",
+    "title": "Technical Skills",
+    "section": "Tools",
+    "text": "Tools\n\nGit/GitHub, CMake, vcpkg, VS Code\nLinux tooling, CI basics (GitHub Actions)"
+  },
+  {
+    "objectID": "skills.html#technical-focus-areas",
+    "href": "skills.html#technical-focus-areas",
+    "title": "Technical Skills",
+    "section": "Technical Focus Areas",
+    "text": "Technical Focus Areas\n\nData structures & algorithms\nSystems/controls mindset (determinism, safety, logging, fault handling)\nReproducible experiments & documentation"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "I am an electrical engineer with a strong interest in building, understanding, and improving complex systems. My work spans industrial electrical infrastructure, cryogenic and sensor-based systems, and real-time hardware control.\nI am particularly drawn to high-reliability environments where careful design, structured thinking, and disciplined execution matter."
+  },
+  {
+    "objectID": "index.html#featured-projects",
+    "href": "index.html#featured-projects",
+    "title": "Home",
+    "section": "Featured Projects",
+    "text": "Featured Projects\n\n\nQAOA Experiments\nExploring QAOA for optimization problems (e.g., Max-Cut), including circuit construction, parameter schedules, and evaluation.\n\nWriteup: Latest blog posts\nRepo: https://github.com/AwstynC/QAOA_MaxCut.git\n\n\n\nNoteSearcher (C++)\nA fast note/file searcher using an inverted index — designed for simple local search, extensible into a UI later.\n\nRepo: https://github.com/AwstynC/NoteSearch.git"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Home",
+    "section": "Contact",
+    "text": "Contact\n\nEmail: awstyncordova@gmail.com\nLinkedIn: https://www.linkedin.com/in/awstyn-cordova-2406b4148/"
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": "You can reach me here:\n\nEmail: awstyncordova@gmail.com\n\nLinkedIn: https://www.linkedin.com/in/awstyn-cordova-2406b4148/\n\nGitHub: https://github.com/AwstynC"
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html",
+    "href": "blog/posts/qaoa/2026-02-19-qaoa-update.html",
+    "title": "QAOA Progress: Baseline",
+    "section": "",
+    "text": "Built professional portfolio website using Quarto, including a blog to document my QAOA project progress. Set up initial project structure and created first progress post template."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html#what-i-worked-on",
+    "href": "blog/posts/qaoa/2026-02-19-qaoa-update.html#what-i-worked-on",
+    "title": "QAOA Progress: Baseline",
+    "section": "",
+    "text": "Built professional portfolio website using Quarto, including a blog to document my QAOA project progress. Set up initial project structure and created first progress post template."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html#technical-challenges",
+    "href": "blog/posts/qaoa/2026-02-19-qaoa-update.html#technical-challenges",
+    "title": "QAOA Progress: Baseline",
+    "section": "Technical challenges",
+    "text": "Technical challenges\nI had to learn how to use Quarto and customize the website design. I also needed to figure out how to structure my blog posts effectively to communicate my progress and challenges clearly."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html#next-steps",
+    "href": "blog/posts/qaoa/2026-02-19-qaoa-update.html#next-steps",
+    "title": "QAOA Progress: Baseline",
+    "section": "Next steps",
+    "text": "Next steps\nI am going to define my graph with vertices and edges, construct the QAOA circuit that creates a uniform superposition of the vertices and applies the cost and mixer Hamiltonians."
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Projects Blog",
+    "section": "",
+    "text": "Choose a project:\n\nQAOA Project Blog\nNoteSearch Project Blog"
+  },
+  {
+    "objectID": "blog/notesearch.html",
+    "href": "blog/notesearch.html",
+    "title": "NoteSearch Project Blog",
+    "section": "",
+    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/qaoa.html",
+    "href": "blog/qaoa.html",
+    "title": "QAOA Project Blog",
+    "section": "",
+    "text": "Progress posts for my QAOA work.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Baseline\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 19, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "education.html",
+    "href": "education.html",
+    "title": "Education",
+    "section": "",
+    "text": "University of Colorado Boulder B.S. Applied Computer Science - Jan 2025 - Present\nUniversity of Colorado Denver B.S. Electrical Engineering - Jan 2020 - May 2024\nUniversity of Colorado Denver Cert. Quantum Information Technology - Jan 2023 - May 2024"
+  },
+  {
+    "objectID": "education.html#education",
+    "href": "education.html#education",
+    "title": "Education",
+    "section": "",
+    "text": "University of Colorado Boulder B.S. Applied Computer Science - Jan 2025 - Present\nUniversity of Colorado Denver B.S. Electrical Engineering - Jan 2020 - May 2024\nUniversity of Colorado Denver Cert. Quantum Information Technology - Jan 2023 - May 2024"
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Resume",
+    "section": "",
+    "text": "Download my resume here:\n\nResume PDF: Download\n\nIf you prefer, you can also view my experience through the Projects and Course Project Blog."
+  }
+]
