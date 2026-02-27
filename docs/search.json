@@ -63,6 +63,55 @@
     "text": "You can reach me here:\n\nEmail: awstyncordova@gmail.com\n\nLinkedIn: https://www.linkedin.com/in/awstyn-cordova-2406b4148/\n\nGitHub: https://github.com/AwstynC"
   },
   {
+    "objectID": "blog/posts/qaoa/2026-02-27-qaoa-update.html",
+    "href": "blog/posts/qaoa/2026-02-27-qaoa-update.html",
+    "title": "QAOA Progress: Defining the Graph",
+    "section": "",
+    "text": "Last week I finally implement a virtual environment for my project and went about properly installing the libraries that I am into that environment. They are also frozen to the specific versions they were downloaded as so as to prevent any breaks do to updates later on. I also studies further into Google’s own cirq file regarding QAOA Maxcut and began running their implementation of this project to see what expected outputs should look like or would look like once my own implementation is complete. I’ve started with creating the graph and getting it to display properly, this has been a big frustration mainly due to initially using codespaces on github, giving up and cloning the repo onto my own hardware and that has been smoother sailing. My graph is on the left and the google graph is on the right. I have included line weights in my own graph as these will determine the number of cuts between each node. Google’s implementation leaves out the weighting of the edges.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Comparison of a randomly generated weighted graph and the Google Sycamore connectivity graph."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-27-qaoa-update.html#what-did-i-do-last-week",
+    "href": "blog/posts/qaoa/2026-02-27-qaoa-update.html#what-did-i-do-last-week",
+    "title": "QAOA Progress: Defining the Graph",
+    "section": "",
+    "text": "Last week I finally implement a virtual environment for my project and went about properly installing the libraries that I am into that environment. They are also frozen to the specific versions they were downloaded as so as to prevent any breaks do to updates later on. I also studies further into Google’s own cirq file regarding QAOA Maxcut and began running their implementation of this project to see what expected outputs should look like or would look like once my own implementation is complete. I’ve started with creating the graph and getting it to display properly, this has been a big frustration mainly due to initially using codespaces on github, giving up and cloning the repo onto my own hardware and that has been smoother sailing. My graph is on the left and the google graph is on the right. I have included line weights in my own graph as these will determine the number of cuts between each node. Google’s implementation leaves out the weighting of the edges.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Comparison of a randomly generated weighted graph and the Google Sycamore connectivity graph."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-27-qaoa-update.html#what-are-the-next-steps",
+    "href": "blog/posts/qaoa/2026-02-27-qaoa-update.html#what-are-the-next-steps",
+    "title": "QAOA Progress: Defining the Graph",
+    "section": "What are the next steps?",
+    "text": "What are the next steps?\nThis week I plan to finish up the google example and begin the cut process for my own example and how that structure is going to work. Maybe finally I’ll get a set schedule down as well."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-27-qaoa-update.html#are-the-any-impediments-in-my-way",
+    "href": "blog/posts/qaoa/2026-02-27-qaoa-update.html#are-the-any-impediments-in-my-way",
+    "title": "QAOA Progress: Defining the Graph",
+    "section": "Are the any impediments in my way?",
+    "text": "Are the any impediments in my way?\nThe only impediment in my way at the moment is a large scale maintenance project that I am in charge of this coming week that will the time I normally would use to complete other work and school tasks. I should be fine to work on the project while out in the field now that I have a clone of the project on my own device."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-02-27-qaoa-update.html#reflections",
+    "href": "blog/posts/qaoa/2026-02-27-qaoa-update.html#reflections",
+    "title": "QAOA Progress: Defining the Graph",
+    "section": "Reflections",
+    "text": "Reflections\nI tackled this initial step in a somewhat organized fashion by building the graph first, but I ended up making last minute changes to the display model that caused issues. Instead of going on impulse I’m going to figure out what steps to take next in the code first so that those changes are less likely to occur."
+  },
+  {
+    "objectID": "blog/notesearch.html",
+    "href": "blog/notesearch.html",
+    "title": "NoteSearch Project Blog",
+    "section": "",
+    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Projects Blog",
+    "section": "",
+    "text": "Choose a project:\n\nQAOA Project Blog\nNoteSearch Project Blog"
+  },
+  {
     "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html",
     "href": "blog/posts/qaoa/2026-02-19-qaoa-update.html",
     "title": "QAOA Progress: Baseline",
@@ -91,25 +140,11 @@
     "text": "Next steps\nI am going to define my graph with vertices and edges, construct the QAOA circuit that creates a uniform superposition of the vertices and applies the cost and mixer Hamiltonians."
   },
   {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Projects Blog",
-    "section": "",
-    "text": "Choose a project:\n\nQAOA Project Blog\nNoteSearch Project Blog"
-  },
-  {
-    "objectID": "blog/notesearch.html",
-    "href": "blog/notesearch.html",
-    "title": "NoteSearch Project Blog",
-    "section": "",
-    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "blog/qaoa.html",
     "href": "blog/qaoa.html",
     "title": "QAOA Project Blog",
     "section": "",
-    "text": "Progress posts for my QAOA work.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Baseline\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 19, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Progress posts for my QAOA work.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Defining the Graph\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Baseline\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 19, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "education.html",

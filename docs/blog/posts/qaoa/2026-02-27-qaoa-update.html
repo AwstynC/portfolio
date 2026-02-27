@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-02-27">
 
-<title>QAOA Project Blog – Awstyn Cordova</title>
+<title>QAOA Progress: Defining the Graph – Awstyn Cordova</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +24,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d4f84655f446305ac42a8f1abcf7405.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-1d4f84655f446305ac42a8f1abcf7405.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,68 +69,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -141,7 +82,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Awstyn Cordova</span>
     </a>
   </div>
@@ -152,27 +93,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../blog/index.html"> 
+    <a class="nav-link" href="../../../blog/index.html"> 
 <span class="menu-text">Course Project Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../skills.html"> 
+    <a class="nav-link" href="../../../skills.html"> 
 <span class="menu-text">Technical Skills</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../education.html"> 
+    <a class="nav-link" href="../../../education.html"> 
 <span class="menu-text">Education</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resume.html"> 
+    <a class="nav-link" href="../../../resume.html"> 
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../contact.html"> 
+    <a class="nav-link" href="../../../contact.html"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -199,21 +140,41 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q291cnNlJTIwUHJvamVjdA==">Course Project <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UUFPQQ==">QAOA <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UXVhbnR1bQ==">Quantum <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-did-i-do-last-week" id="toc-what-did-i-do-last-week" class="nav-link active" data-scroll-target="#what-did-i-do-last-week">What did I do last week?</a></li>
+  <li><a href="#what-are-the-next-steps" id="toc-what-are-the-next-steps" class="nav-link" data-scroll-target="#what-are-the-next-steps">What are the next steps?</a></li>
+  <li><a href="#are-the-any-impediments-in-my-way" id="toc-are-the-any-impediments-in-my-way" class="nav-link" data-scroll-target="#are-the-any-impediments-in-my-way">Are the any impediments in my way?</a></li>
+  <li><a href="#reflections" id="toc-reflections" class="nav-link" data-scroll-target="#reflections">Reflections</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">QAOA Project Blog</h1>
-</div>
+<h1 class="title">QAOA Progress: Defining the Graph</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">QAOA</div>
+    <div class="quarto-category">Quantum</div>
+    <div class="quarto-category">Course Project</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 27, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -223,78 +184,43 @@ window.Quarto = {
 </header>
 
 
-<p>Progress posts for my QAOA work.</p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="UUFPQSUyQ1F1YW50dW0lMkNDb3Vyc2UlMjBQcm9qZWN0" data-listing-date-sort="1772175600000" data-listing-file-modified-sort="1772213000489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="355">
-<div class="thumbnail"><a href="../blog/posts/qaoa/2026-02-27-qaoa-update.html" class="no-external">
-
-<p class="card-img-top"><img src="posts\blog_images\MyGraphRandom.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/posts/qaoa/2026-02-27-qaoa-update.html" class="no-external">QAOA Progress: Defining the Graph</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UUFPQQ=='); return false;">QAOA</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UXVhbnR1bQ=='); return false;">Quantum</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q291cnNlJTIwUHJvamVjdA=='); return false;">Course Project</div>
-
+<section id="what-did-i-do-last-week" class="level2">
+<h2 class="anchored" data-anchor-id="what-did-i-do-last-week">What did I do last week?</h2>
+<p>Last week I finally implement a virtual environment for my project and went about properly installing the libraries that I am into that environment. They are also frozen to the specific versions they were downloaded as so as to prevent any breaks do to updates later on. I also studies further into Google’s own cirq file regarding QAOA Maxcut and began running their implementation of this project to see what expected outputs should look like or would look like once my own implementation is complete. I’ve started with creating the graph and getting it to display properly, this has been a big frustration mainly due to initially using codespaces on github, giving up and cloning the repo onto my own hardware and that has been smoother sailing. My graph is on the left and the google graph is on the right. I have included line weights in my own graph as these will determine the number of cuts between each node. Google’s implementation leaves out the weighting of the edges.</p>
+<div id="fig-graph-comparison" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-graph-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="../blog_images/MyGraphRandom.png" class="img-fluid figure-img"></p>
 </div>
-<div class="delink listing-description"><a href="../blog/posts/qaoa/2026-02-27-qaoa-update.html" class="no-external">
-Last week I finally implement a virtual environment for my project and went about properly installing the libraries that I am into that environment. They are also frozen to…
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/posts/qaoa/2026-02-27-qaoa-update.html" class="no-external">
-<div class="listing-date">
-Feb 27, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="UUFPQSUyQ1F1YW50dW0lMkNDb3Vyc2UlMjBQcm9qZWN0" data-listing-date-sort="1771484400000" data-listing-file-modified-sort="1771566028259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="91">
-<div class="thumbnail"><a href="../blog/posts/qaoa/2026-02-19-qaoa-update.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/posts/qaoa/2026-02-19-qaoa-update.html" class="no-external">QAOA Progress: Baseline</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UUFPQQ=='); return false;">QAOA</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UXVhbnR1bQ=='); return false;">Quantum</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q291cnNlJTIwUHJvamVjdA=='); return false;">Course Project</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/posts/qaoa/2026-02-19-qaoa-update.html" class="no-external">
-Built professional portfolio website using Quarto, including a blog to document my QAOA project progress. Set up initial project structure and created first progress post…
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/posts/qaoa/2026-02-19-qaoa-update.html" class="no-external">
-<div class="listing-date">
-Feb 19, 2026
-</div>
-</a>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="../blog_images/SycamoreGraph.png" class="img-fluid figure-img"></p>
 </div>
 </div>
 </div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-graph-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Comparison of a randomly generated weighted graph and the Google Sycamore connectivity graph.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-are-the-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-the-next-steps">What are the next steps?</h2>
+<p>This week I plan to finish up the google example and begin the cut process for my own example and how that structure is going to work. Maybe finally I’ll get a set schedule down as well.</p>
+</section>
+<section id="are-the-any-impediments-in-my-way" class="level2">
+<h2 class="anchored" data-anchor-id="are-the-any-impediments-in-my-way">Are the any impediments in my way?</h2>
+<p>The only impediment in my way at the moment is a large scale maintenance project that I am in charge of this coming week that will the time I normally would use to complete other work and school tasks. I should be fine to work on the project while out in the field now that I have a clone of the project on my own device.</p>
+</section>
+<section id="reflections" class="level2">
+<h2 class="anchored" data-anchor-id="reflections">Reflections</h2>
+<p>I tackled this initial step in a somewhat organized fashion by building the graph first, but I ended up making last minute changes to the display model that caused issues. Instead of going on impulse I’m going to figure out what steps to take next in the code first so that those changes are less likely to occur.</p>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -700,5 +626,5 @@ Feb 19, 2026
 
 
 
-<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
