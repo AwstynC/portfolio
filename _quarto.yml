@@ -1,0 +1,32 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Awstyn Cordova"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: blog/index.qmd
+        text: Course Project Blog
+      - href: skills.qmd
+        text: Technical Skills
+      - href: education.qmd
+        text: Education
+      - href: resume.qmd
+        text: Resume
+      - href: contact.qmd
+        text: Contact
+    right:
+      - icon: github
+        href: https://github.com/AwstynC
+      - icon: linkedin
+        href: https://www.linkedin.com/in/awstyn-cordova-2406b4148/
+
+format:
+  html:
+    theme: trestles
+    css: styles.css
+    toc: true
+    smooth-scroll: true

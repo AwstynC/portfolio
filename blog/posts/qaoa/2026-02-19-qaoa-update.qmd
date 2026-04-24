@@ -1,0 +1,14 @@
+---
+title: "QAOA Progress: Baseline"
+date: 2026-02-19
+categories: [QAOA, Quantum, Course Project]
+---
+
+## What I worked on
+Built professional portfolio website using Quarto, including a blog to document my QAOA project progress. Set up initial project structure and created first progress post template.
+
+## Technical challenges
+I had to learn how to use Quarto and customize the website design. I also needed to figure out how to structure my blog posts effectively to communicate my progress and challenges clearly.
+
+## Next steps
+I am going to define my graph with vertices and edges, construct the QAOA circuit that creates a uniform superposition of the vertices and applies the cost and mixer Hamiltonians.

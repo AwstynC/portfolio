@@ -1,0 +1,9 @@
+---
+title: "QAOA Project Blog"
+listing:
+  contents: posts/qaoa
+  sort: "date desc"
+  categories: true
+---
+
+Progress posts for my QAOA work.

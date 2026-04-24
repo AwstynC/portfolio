@@ -1,0 +1,8 @@
+---
+title: "Projects Blog"
+---
+
+Choose a project:
+
+- [QAOA Project Blog](qaoa.qmd)
+- [NoteSearch Project Blog](notesearch.qmd)

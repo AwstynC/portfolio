@@ -46,7 +46,7 @@
     "href": "index.html#featured-projects",
     "title": "Home",
     "section": "Featured Projects",
-    "text": "Featured Projects\n\n\nQAOA Experiments\nExploring QAOA for optimization problems (e.g., Max-Cut), including circuit construction, parameter schedules, and evaluation.\n\nWriteup: Latest blog posts\nRepo: https://github.com/AwstynC/QAOA_MaxCut.git\n\n\n\nNoteSearcher (C++)\nA fast note/file searcher using an inverted index — designed for simple local search, extensible into a UI later.\n\nRepo: https://github.com/AwstynC/NoteSearch.git"
+    "text": "Featured Projects\n\n\nQAOA Experiments\nExploring QAOA for optimization problems (e.g., Max-Cut), including circuit construction, parameter schedules, and evaluation.\n\nWriteup: Latest blog posts\nRepo: https://github.com/AwstynC/QAOA_MaxCut.git\n\n\n\nNoteSearcher (C++)\nA fast note/file searcher using an inverted index — designed for simple local search, extensible into a UI later.\n\nRepo: Repo for NoteSearcher"
   },
   {
     "objectID": "index.html#contact",
@@ -61,6 +61,48 @@
     "title": "Contact",
     "section": "",
     "text": "You can reach me here:\n\nEmail: awstyncordova@gmail.com\n\nLinkedIn: https://www.linkedin.com/in/awstyn-cordova-2406b4148/\n\nGitHub: https://github.com/AwstynC"
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html",
+    "href": "blog/posts/qaoa/2026-04-23-qaoa-final.html",
+    "title": "QAOA Final Report: Quantum vs Classical Max-Cut",
+    "section": "",
+    "text": "This project set out to explore how quantum computing approaches the Max-Cut problem differently from classical methods. Using Google’s Cirq library, I implemented the Quantum Approximate Optimization Algorithm (QAOA) and compared it against brute force and greedy classical baselines across graphs ranging from 4 to 30 nodes.\nMy six measurable goals were: formulating Max-Cut as an Ising Hamiltonian, implementing QAOA in Cirq, simulating quantum circuits, building classical baselines, evaluating approximation ratios, and analyzing runtime scaling."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html#project-vision-and-goals",
+    "href": "blog/posts/qaoa/2026-04-23-qaoa-final.html#project-vision-and-goals",
+    "title": "QAOA Final Report: Quantum vs Classical Max-Cut",
+    "section": "",
+    "text": "This project set out to explore how quantum computing approaches the Max-Cut problem differently from classical methods. Using Google’s Cirq library, I implemented the Quantum Approximate Optimization Algorithm (QAOA) and compared it against brute force and greedy classical baselines across graphs ranging from 4 to 30 nodes.\nMy six measurable goals were: formulating Max-Cut as an Ising Hamiltonian, implementing QAOA in Cirq, simulating quantum circuits, building classical baselines, evaluating approximation ratios, and analyzing runtime scaling."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html#results",
+    "href": "blog/posts/qaoa/2026-04-23-qaoa-final.html#results",
+    "title": "QAOA Final Report: Quantum vs Classical Max-Cut",
+    "section": "Results",
+    "text": "Results\nAll six goals were achieved. Key findings from the scaling experiments:\n\n\n\n\n\n\n\n\n\n\n\nn\nBrute Force\nGreedy Ratio\nQAOA Ratio\nBF Time\nQAOA Time\n\n\n\n\n4\n10.350\n1.000\n1.000\n~0.000s\n~0.936s\n\n\n10\n45.770\n0.839\n0.959\n0.001s\n~2.054s\n\n\n20\n169.310\n0.899\n0.877\n3.308s\n~6.663s\n\n\n25\n255.040\n0.844\n0.894\n157.235s\n~81.803s\n\n\n30\n361.540\n0.839\n0.858\n7058.681s\n~6181.511s\n\n\n\nQAOA consistently outperformed greedy on smaller graphs but both methods degraded at larger sizes, an expected consequence of p=1 circuit depth.\nThe most striking result was runtime scaling. At n=30, brute force took 118 minutes while QAOA simulation took ~103 minutes. Projecting forward, brute force would take ~43 years at n=50. On real quantum hardware, that same QAOA circuit would run in microseconds."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html#reflection",
+    "href": "blog/posts/qaoa/2026-04-23-qaoa-final.html#reflection",
+    "title": "QAOA Final Report: Quantum vs Classical Max-Cut",
+    "section": "Reflection",
+    "text": "Reflection\nThe hardest part was finding research that explained expected results without giving away the implementation. Significant work constraints — four week-long field projects and a two-week remote dam maintenance assignment — made data collection difficult. The unexpected passing of my last close grandparent added further challenge during the project period.\nThe most surprising finding was QAOA occasionally losing to greedy. This turned out to be expected behavior at p=1 under classical simulation constraints and is not a flaw in the implementation."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html#whats-next",
+    "href": "blog/posts/qaoa/2026-04-23-qaoa-final.html#whats-next",
+    "title": "QAOA Final Report: Quantum vs Classical Max-Cut",
+    "section": "What’s Next",
+    "text": "What’s Next\nGiven more time I would run circuits on real quantum hardware via IBM Quantum, implement higher p values to show quality improvement with circuit depth, and benchmark against the Goemans-Williamson semidefinite programming approach."
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html#repository",
+    "href": "blog/posts/qaoa/2026-04-23-qaoa-final.html#repository",
+    "title": "QAOA Final Report: Quantum vs Classical Max-Cut",
+    "section": "Repository",
+    "text": "Repository\nFull code: https://github.com/AwstynC/QAOA_MaxCut"
   },
   {
     "objectID": "blog/posts/qaoa/2026-02-27-qaoa-update.html",
@@ -140,11 +182,25 @@
     "text": "Next steps\nI am going to define my graph with vertices and edges, construct the QAOA circuit that creates a uniform superposition of the vertices and applies the cost and mixer Hamiltonians."
   },
   {
+    "objectID": "blog/posts/qaoa/2026-04-19-qaoa-cuts.html",
+    "href": "blog/posts/qaoa/2026-04-19-qaoa-cuts.html",
+    "title": "QAOA Progress: Cut Visualizations",
+    "section": "",
+    "text": "As part of the ongoing QAOA experiments, I have been generating cut visualizations across different graph sizes. For each graph, blue nodes are in partition 1 and red nodes are in partition 0. Green edges cross the partition boundary and contribute to the cut value. Gray edges connect nodes in the same partition and contribute nothing.\n\n\n\nAt n=8 all three methods achieved an approximation ratio of 1.000, meaning every method found the same maximum cut of 38.43. This confirms the implementations are correct and agree on small graphs.\nGraph Structure (n=8)\n\nBrute Force — Cut: 38.43 (ratio: 1.000)\n\nGreedy — Cut: 38.43 (ratio: 1.000)\n\nQAOA — Cut: 37.65 (ratio: 0.980)\n\n\n\n\n\nAt n=10 the methods begin to diverge noticeably. Greedy drops to a ratio of 0.839 while QAOA holds at 0.959. This is the first graph size where the choice of algorithm starts to meaningfully affect solution quality.\nGraph Structure (n=10)\n\nBrute Force — Cut: 45.77 (ratio: 1.000)\n\nGreedy — Cut: 38.40 (ratio: 0.839)\n\nQAOA — Cut: 43.90 (ratio: 0.959)\n\n\n\n\n\nAt n=30 brute force took 118 minutes to find the optimal cut while QAOA simulation took approximately 103 minutes. Both methods are expensive at this scale when run classically. The graph is noticeably more complex and the partition boundaries are harder to visually interpret, which reflects the increased difficulty of the problem.\nGraph Structure (n=30)\n\nBrute Force — Cut: 361.54 (ratio: 1.000)\n\nGreedy — Cut: 303.28 (ratio: 0.839)\n\nQAOA — Cut: 310.21 (ratio: 0.858)\n\n\nMore analysis and final results coming in the project evaluation post.\nRepository: https://github.com/AwstynC/QAOA_MaxCut"
+  },
+  {
+    "objectID": "blog/posts/qaoa/2026-04-19-qaoa-cuts.html#visualizing-the-max-cut-results",
+    "href": "blog/posts/qaoa/2026-04-19-qaoa-cuts.html#visualizing-the-max-cut-results",
+    "title": "QAOA Progress: Cut Visualizations",
+    "section": "",
+    "text": "As part of the ongoing QAOA experiments, I have been generating cut visualizations across different graph sizes. For each graph, blue nodes are in partition 1 and red nodes are in partition 0. Green edges cross the partition boundary and contribute to the cut value. Gray edges connect nodes in the same partition and contribute nothing.\n\n\n\nAt n=8 all three methods achieved an approximation ratio of 1.000, meaning every method found the same maximum cut of 38.43. This confirms the implementations are correct and agree on small graphs.\nGraph Structure (n=8)\n\nBrute Force — Cut: 38.43 (ratio: 1.000)\n\nGreedy — Cut: 38.43 (ratio: 1.000)\n\nQAOA — Cut: 37.65 (ratio: 0.980)\n\n\n\n\n\nAt n=10 the methods begin to diverge noticeably. Greedy drops to a ratio of 0.839 while QAOA holds at 0.959. This is the first graph size where the choice of algorithm starts to meaningfully affect solution quality.\nGraph Structure (n=10)\n\nBrute Force — Cut: 45.77 (ratio: 1.000)\n\nGreedy — Cut: 38.40 (ratio: 0.839)\n\nQAOA — Cut: 43.90 (ratio: 0.959)\n\n\n\n\n\nAt n=30 brute force took 118 minutes to find the optimal cut while QAOA simulation took approximately 103 minutes. Both methods are expensive at this scale when run classically. The graph is noticeably more complex and the partition boundaries are harder to visually interpret, which reflects the increased difficulty of the problem.\nGraph Structure (n=30)\n\nBrute Force — Cut: 361.54 (ratio: 1.000)\n\nGreedy — Cut: 303.28 (ratio: 0.839)\n\nQAOA — Cut: 310.21 (ratio: 0.858)\n\n\nMore analysis and final results coming in the project evaluation post.\nRepository: https://github.com/AwstynC/QAOA_MaxCut"
+  },
+  {
     "objectID": "blog/qaoa.html",
     "href": "blog/qaoa.html",
     "title": "QAOA Project Blog",
     "section": "",
-    "text": "Progress posts for my QAOA work.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Defining the Graph\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Baseline\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 19, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Progress posts for my QAOA work.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Final Report: Quantum vs Classical Max-Cut\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nApr 23, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Cut Visualizations\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nApr 19, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Defining the Graph\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Baseline\n\n\n\nQAOA\n\nQuantum\n\nCourse Project\n\n\n\n\n\n\n\n\n\nFeb 19, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "education.html",

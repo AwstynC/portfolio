@@ -1,0 +1,59 @@
+---
+title: "QAOA Final Report: Quantum vs Classical Max-Cut"
+date: "2026-04-23"
+categories: [QAOA, Quantum, Course Project]
+---
+
+## Project Vision and Goals
+
+This project set out to explore how quantum computing approaches the Max-Cut 
+problem differently from classical methods. Using Google's Cirq library, I 
+implemented the Quantum Approximate Optimization Algorithm (QAOA) and compared 
+it against brute force and greedy classical baselines across graphs ranging 
+from 4 to 30 nodes.
+
+My six measurable goals were: formulating Max-Cut as an Ising Hamiltonian, 
+implementing QAOA in Cirq, simulating quantum circuits, building classical 
+baselines, evaluating approximation ratios, and analyzing runtime scaling.
+
+## Results
+
+All six goals were achieved. Key findings from the scaling experiments:
+
+| n  | Brute Force | Greedy Ratio | QAOA Ratio | BF Time     | QAOA Time   |
+|----|-------------|--------------|------------|-------------|-------------|
+| 4  | 10.350      | 1.000        | 1.000      | ~0.000s     | ~0.936s     |
+| 10 | 45.770      | 0.839        | 0.959      | 0.001s      | ~2.054s     |
+| 20 | 169.310     | 0.899        | 0.877      | 3.308s      | ~6.663s     |
+| 25 | 255.040     | 0.844        | 0.894      | 157.235s    | ~81.803s    |
+| 30 | 361.540     | 0.839        | 0.858      | 7058.681s   | ~6181.511s  |
+
+QAOA consistently outperformed greedy on smaller graphs but both methods 
+degraded at larger sizes, an expected consequence of p=1 circuit depth.
+
+The most striking result was runtime scaling. At n=30, brute force took 
+**118 minutes** while QAOA simulation took **~103 minutes**. Projecting forward, 
+brute force would take ~43 years at n=50. On real quantum hardware, that same 
+QAOA circuit would run in microseconds.
+
+## Reflection
+
+The hardest part was finding research that explained expected results without 
+giving away the implementation. Significant work constraints — four week-long 
+field projects and a two-week remote dam maintenance assignment — made data 
+collection difficult. The unexpected passing of my last close grandparent added 
+further challenge during the project period.
+
+The most surprising finding was QAOA occasionally losing to greedy. This turned 
+out to be expected behavior at p=1 under classical simulation constraints and is 
+not a flaw in the implementation.
+
+## What's Next
+
+Given more time I would run circuits on real quantum hardware via IBM Quantum, 
+implement higher p values to show quality improvement with circuit depth, and 
+benchmark against the Goemans-Williamson semidefinite programming approach.
+
+## Repository
+
+Full code: [https://github.com/AwstynC/QAOA_MaxCut](https://github.com/AwstynC/QAOA_MaxCut)

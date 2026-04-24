@@ -1,0 +1,10 @@
+---
+title: "NoteSearch Project Blog"
+listing:
+  contents: posts/notesearch
+  sort: "date desc"
+  categories: true
+  date-format: "MMM d, yyyy"
+---
+
+Development notes for my C++ NoteSearch project.
