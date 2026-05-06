@@ -2,7 +2,28 @@
 title: "Projects Blog"
 ---
 
-Choose a project:
+A running log of progress, decisions, and lessons learned across my personal and course projects.
 
-- [QAOA Project Blog](qaoa.qmd)
-- [NoteSearch Project Blog](notesearch.qmd)
+---
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6 .card .p-4}
+### ⚛️ QAOA Project
+**Quantum computing · Course project**
+
+Exploring QAOA for combinatorial problems like Max-Cut. Posts cover circuit construction, graph setup, parameter tuning, and evaluation.
+
+[View posts →](qaoa.qmd)
+:::
+
+::: {.g-col-12 .g-col-md-6 .card .p-4}
+### 🔍 NoteSearch (C++)
+**C++ · Data structures · Personal project**
+
+Building a fast, private desktop search tool for personal notes using an inverted index. Posts cover architecture decisions, indexing strategies, and performance.
+
+[View posts →](notesearch.qmd)
+:::
+
+:::

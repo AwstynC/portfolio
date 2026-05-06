@@ -13,5 +13,15 @@
       "/blog/posts/qaoa/2026-02-27-qaoa-update.html",
       "/blog/posts/qaoa/2026-02-19-qaoa-update.html"
     ]
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/posts/qaoa/2026-04-23-qaoa-final.html",
+      "/blog/posts/qaoa/2026-04-19-qaoa-cuts.html",
+      "/blog/posts/qaoa/2026-02-27-qaoa-update.html",
+      "/blog/posts/qaoa/2026-02-19-qaoa-update.html",
+      "/blog/posts/notesearch/2025-11-21-notesearch-initial.html"
+    ]
   }
 ]

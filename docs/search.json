@@ -151,7 +151,7 @@
     "href": "blog/index.html",
     "title": "Projects Blog",
     "section": "",
-    "text": "Choose a project:\n\nQAOA Project Blog\nNoteSearch Project Blog"
+    "text": "A running log of progress, decisions, and lessons learned across my personal and course projects.\n\n\n\n⚛️ QAOA Project\nQuantum computing · Course project\nExploring QAOA for combinatorial problems like Max-Cut. Posts cover circuit construction, graph setup, parameter tuning, and evaluation.\nView posts →\n\n\n🔍 NoteSearch (C++)\nC++ · Data structures · Personal project\nBuilding a fast, private desktop search tool for personal notes using an inverted index. Posts cover architecture decisions, indexing strategies, and performance.\nView posts →"
   },
   {
     "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html",
@@ -313,5 +313,19 @@
     "title": "Background",
     "section": "Technical Skills",
     "text": "Technical Skills\nLanguages C++, Python, SQL, Bash/PowerShell\nFrameworks & Libraries Cirq, Qiskit · Testing: gtest / pytest\nTools Git/GitHub, CMake, vcpkg, VS Code, Linux tooling, GitHub Actions (CI basics)\nFocus Areas Data structures & algorithms · Systems/controls mindset (determinism, safety, logging, fault handling) · Reproducible experiments & documentation\n\nWant the full picture? Download my resume or get in touch."
+  },
+  {
+    "objectID": "blog/index.html#qaoa-project",
+    "href": "blog/index.html#qaoa-project",
+    "title": "Projects Blog",
+    "section": "⚛️ QAOA Project",
+    "text": "⚛️ QAOA Project\n\n\n\n\n\n\n\n\nQAOA Final Report: Quantum vs Classical Max-Cut\n\n\n\n\n\n\n\n\n\nApr 23, 2026\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Cut Visualizations\n\n\n\n\n\n\n\n\n\nApr 19, 2026\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Defining the Graph\n\n\n\n\n\n\n\n\n\nFeb 27, 2026\n\n\n\n\n\n\n\n\n\n\n\nQAOA Progress: Baseline\n\n\n\n\n\n\n\n\n\nFeb 19, 2026\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/index.html#notesearch-c",
+    "href": "blog/index.html#notesearch-c",
+    "title": "Projects Blog",
+    "section": "🔍 NoteSearch (C++)",
+    "text": "🔍 NoteSearch (C++)\n\n\n\n\n\n\n\n\nNoteSearch Part 1: Building a Personal Search Engine in C++\n\n\n\n\n\n\n\n\n\nNov 21, 2025\n\n\n\n\n\n\nNo matching items"
   }
 ]
