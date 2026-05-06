@@ -10,10 +10,8 @@ website:
         text: Home
       - href: blog/index.qmd
         text: Course Project Blog
-      - href: skills.qmd
-        text: Technical Skills
-      - href: education.qmd
-        text: Education
+      - href: background.qmd
+        text: Background
       - href: resume.qmd
         text: Resume
       - href: contact.qmd

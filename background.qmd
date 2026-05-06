@@ -1,0 +1,34 @@
+---
+title: "Background"
+---
+
+## Education
+
+**University of Colorado Boulder**
+B.S. Applied Computer Science — *Jan 2025 – Present*
+
+**University of Colorado Denver**
+B.S. Electrical Engineering — *Jan 2020 – May 2024*
+
+**University of Colorado Denver**
+Certificate, Quantum Information Technology — *Jan 2023 – May 2024*
+
+---
+
+## Technical Skills
+
+**Languages**
+C++, Python, SQL, Bash/PowerShell
+
+**Frameworks & Libraries**
+Cirq, Qiskit · Testing: gtest / pytest
+
+**Tools**
+Git/GitHub, CMake, vcpkg, VS Code, Linux tooling, GitHub Actions (CI basics)
+
+**Focus Areas**
+Data structures & algorithms · Systems/controls mindset (determinism, safety, logging, fault handling) · Reproducible experiments & documentation
+
+---
+
+*Want the full picture? [Download my resume](resume.qmd) or [get in touch](contact.qmd).*

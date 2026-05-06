@@ -39,14 +39,14 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "I am an electrical engineer with a strong interest in building, understanding, and improving complex systems. My work spans industrial electrical infrastructure, cryogenic and sensor-based systems, and real-time hardware control.\nI am particularly drawn to high-reliability environments where careful design, structured thinking, and disciplined execution matter."
+    "text": "I am an electrical engineer with a strong interest in building, understanding, and improving complex systems. My work spans industrial electrical infrastructure, cryogenic and sensor-based systems, and real-time hardware control.\nI am particularly drawn to high-reliability environments where careful design, structured thinking, and disciplined execution matter.\nView my background → Contact me →"
   },
   {
     "objectID": "index.html#featured-projects",
     "href": "index.html#featured-projects",
     "title": "Home",
     "section": "Featured Projects",
-    "text": "Featured Projects\n\n\nQAOA Experiments\nExploring QAOA for optimization problems (e.g., Max-Cut), including circuit construction, parameter schedules, and evaluation.\n\nWriteup: Latest blog posts\nRepo: https://github.com/AwstynC/QAOA_MaxCut.git\n\n\n\nNoteSearcher (C++)\nA fast note/file searcher using an inverted index — designed for simple local search, extensible into a UI later.\n\nRepo: Repo for NoteSearcher"
+    "text": "Featured Projects\n\n\nQAOA Experiments\nExploring QAOA for optimization problems (e.g., Max-Cut), including circuit construction, parameter schedules, and evaluation.\n\nWriteup: Latest blog posts\nRepo: QAOA_MaxCut\n\n\n\nNoteSearcher (C++)\nA fast note/file searcher using an inverted index — designed for simple local search, extensible into a UI later.\n\nWriteup: Latest blog posts\nRepo: NoteSearch"
   },
   {
     "objectID": "index.html#contact",
@@ -60,7 +60,7 @@
     "href": "contact.html",
     "title": "Contact",
     "section": "",
-    "text": "You can reach me here:\n\nEmail: awstyncordova@gmail.com\n\nLinkedIn: https://www.linkedin.com/in/awstyn-cordova-2406b4148/\n\nGitHub: https://github.com/AwstynC"
+    "text": "I’d love to hear from you — whether it’s about a project, an opportunity, or just to connect.\n\n\n\nEmail\nawstyncordova@gmail.com\n\n\nLinkedIn\nawstyn-cordova\n\n\nGitHub\nAwstynC"
   },
   {
     "objectID": "blog/posts/qaoa/2026-04-23-qaoa-final.html",
@@ -144,7 +144,7 @@
     "href": "blog/notesearch.html",
     "title": "NoteSearch Project Blog",
     "section": "",
-    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSearch Part 1: Building a Personal Search Engine in C++\n\n\n\nC++\n\nSearch Engine\n\nData Structures\n\nPersonal Project\n\n\n\n\n\n\n\n\n\nNov 21, 2025\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/index.html",
@@ -221,6 +221,97 @@
     "href": "resume.html",
     "title": "Resume",
     "section": "",
-    "text": "Download my resume here:\n\nResume PDF: Download\n\nIf you prefer, you can also view my experience through the Projects and Course Project Blog."
+    "text": "📄 Download PDF"
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "",
+    "text": "I wanted a fast, private, desktop search tool for my personal notes — something that could scan a folder full of .txt and .md files and surface results by relevance without sending anything to the internet. No Electron, no web server, no cloud. Just a compiled C++ binary that owns its own data.\nThe core of the project is an inverted index — the same fundamental data structure that powers large-scale search engines. The idea is simple: instead of searching through every file every time a query comes in, you build a map upfront that goes from words to the files they appear in. Lookups then become direct index hits rather than full scans.\nThe goals for this first phase were:\n\nBuild an inverted index from a directory of text files\nSupport exact and partial (substring) word matching\nImplement multi-word AND search with frequency-based scoring\nExtract a snippet showing where the term appears in the file\nKeep the architecture clean and extensible for future file types"
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#project-vision-and-goals",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#project-vision-and-goals",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "",
+    "text": "I wanted a fast, private, desktop search tool for my personal notes — something that could scan a folder full of .txt and .md files and surface results by relevance without sending anything to the internet. No Electron, no web server, no cloud. Just a compiled C++ binary that owns its own data.\nThe core of the project is an inverted index — the same fundamental data structure that powers large-scale search engines. The idea is simple: instead of searching through every file every time a query comes in, you build a map upfront that goes from words to the files they appear in. Lookups then become direct index hits rather than full scans.\nThe goals for this first phase were:\n\nBuild an inverted index from a directory of text files\nSupport exact and partial (substring) word matching\nImplement multi-word AND search with frequency-based scoring\nExtract a snippet showing where the term appears in the file\nKeep the architecture clean and extensible for future file types"
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#the-inverted-index",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#the-inverted-index",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "The Inverted Index",
+    "text": "The Inverted Index\nThe index structure is defined in Indexer.h:\nusing Index = std::unordered_map&lt;std::string, std::unordered_map&lt;std::string, int&gt;&gt;;\nThe outer map keys on a word. The inner map keys on a file path and stores the frequency count of that word in that file. So after indexing a directory, a lookup for \"algorithm\" might return:\n\"algorithm\" -&gt; {\n    \"notes/lecture1.txt\": 4,\n    \"notes/dsa_review.md\": 11,\n    \"notes/project.txt\": 2\n}\nFrequency matters because it drives the relevance score — a file where your search term appears 11 times is more relevant than one where it appears twice."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#building-the-index",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#building-the-index",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "Building the Index",
+    "text": "Building the Index\nThe Indexer class scans a directory, filters for .txt and .md files, reads each one, and populates the index. The entry point is buildIndex():\nvoid Indexer::buildIndex(const std::string& directoryPath) {\n    index.clear();\n    for (const auto& entry : fs::directory_iterator(directoryPath)) {\n        std::string ext = entry.path().extension().string();\n        if (ext == \".txt\" || ext == \".md\") {\n            processFile(entry.path().string());\n        }\n    }\n}\nEach file is read into a string and passed to tokenize(), which strips punctuation and converts everything to lowercase. The resulting words are then inserted into the index with their file path and incremented frequency count:\nfor (const auto& word : words) {\n    index[word][filePath] += 1;\n}"
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#shared-tokenization",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#shared-tokenization",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "Shared Tokenization",
+    "text": "Shared Tokenization\nBoth the Indexer and SearchEngine need to tokenize text — the indexer when building, the engine when processing a query. Having two separate implementations would risk inconsistency, so tokenization lives in a shared header Tokenizer.h as an inline free function:\ninline std::vector&lt;std::string&gt; tokenize(const std::string& text) {\n    std::vector&lt;std::string&gt; tokens;\n    std::string current;\n\n    for (char c : text) {\n        unsigned char uc = static_cast&lt;unsigned char&gt;(c);\n        if (std::isalnum(uc)) {\n            current += static_cast&lt;char&gt;(std::tolower(uc));\n        } else if (!current.empty()) {\n            tokens.push_back(current);\n            current.clear();\n        }\n    }\n    if (!current.empty()) tokens.push_back(current);\n    return tokens;\n}\nUsing inline here is intentional — it tells the linker to expect this definition in multiple translation units and merge them, avoiding duplicate symbol errors without needing a separate .cpp file."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#search-and-scoring",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#search-and-scoring",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "Search and Scoring",
+    "text": "Search and Scoring\nThe SearchEngine class takes a const reference to the completed index — no copy, just a view into the data the Indexer already owns.\nQueries are tokenized the same way as the index content, which guarantees that \"Binary Tree\" and \"binary tree\" resolve to the same tokens and hit the same index entries.\nFor each query term, getFilesForTerm() first checks for an exact match, then falls back to substring matching across all index keys:\n// Exact match\nauto it = index.find(term);\n\n// Partial match fallback\nfor (const auto& kv : index) {\n    if (kv.first.find(term) != std::string::npos) {\n        // accumulate scores\n    }\n}\nThis means searching \"tree\" will also surface files containing \"trees\" or \"subtree\" — useful when you don’t remember the exact form of a word.\nMulti-word queries apply AND logic: a file must contain matches for every term to appear in results. The total score is the sum of frequencies across all matched terms, and results are sorted highest score first with alphabetical tie-breaking."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#snippet-extraction",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#snippet-extraction",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "Snippet Extraction",
+    "text": "Snippet Extraction\nResults include a short preview showing where the term appears in the file. extractSnippet() finds the first occurrence of the search word in the file content and returns a 120-character window centered around it:\nint window = 60;\nstd::size_t start = (pos &gt; static_cast&lt;std::size_t&gt;(window)) ? pos - window : 0;\nstd::size_t end = std::min(pos + lowerWord.length() + window, content.size());\nstd::string snippet = content.substr(start, end - start);\nNewlines are replaced with spaces so the snippet renders cleanly on a single line, wrapped in ... ellipses."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#reflection",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#reflection",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "Reflection",
+    "text": "Reflection\nThe trickiest part was getting the AND search logic right with partial matching in play. Because getFilesForTerm() returns files for both exact and substring hits, a file can satisfy a term match via a substring even if the exact word doesn’t appear. That’s by design, but it’s worth understanding — searching \"hash table\" could match a file containing \"hashtable\" and \"turntable\" even if neither exact word appears independently.\nThe architecture decision I’m most satisfied with is keeping tokenization shared and consistent. It’s a small thing but eliminates an entire class of subtle bugs where the indexer and search engine would process text differently."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#whats-next",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#whats-next",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "What’s Next",
+    "text": "What’s Next\nThe backend is complete and tested. The next phase is wrapping it in a proper desktop GUI using Qt Widgets — a native Windows application with a directory picker, search bar, and results list, all backed by the same pure C++ engine built here."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#repository",
+    "href": "blog/posts/notesearch/2025-11-21-notesearch-initial.html#repository",
+    "title": "NoteSearch Part 1: Building a Personal Search Engine in C++",
+    "section": "Repository",
+    "text": "Repository\nFull code: https://github.com/AwstynC/NoteSearch.git"
+  },
+  {
+    "objectID": "background.html",
+    "href": "background.html",
+    "title": "Background",
+    "section": "",
+    "text": "University of Colorado Boulder B.S. Applied Computer Science — Jan 2025 – Present\nUniversity of Colorado Denver B.S. Electrical Engineering — Jan 2020 – May 2024\nUniversity of Colorado Denver Certificate, Quantum Information Technology — Jan 2023 – May 2024"
+  },
+  {
+    "objectID": "background.html#education",
+    "href": "background.html#education",
+    "title": "Background",
+    "section": "",
+    "text": "University of Colorado Boulder B.S. Applied Computer Science — Jan 2025 – Present\nUniversity of Colorado Denver B.S. Electrical Engineering — Jan 2020 – May 2024\nUniversity of Colorado Denver Certificate, Quantum Information Technology — Jan 2023 – May 2024"
+  },
+  {
+    "objectID": "background.html#technical-skills",
+    "href": "background.html#technical-skills",
+    "title": "Background",
+    "section": "Technical Skills",
+    "text": "Technical Skills\nLanguages C++, Python, SQL, Bash/PowerShell\nFrameworks & Libraries Cirq, Qiskit · Testing: gtest / pytest\nTools Git/GitHub, CMake, vcpkg, VS Code, Linux tooling, GitHub Actions (CI basics)\nFocus Areas Data structures & algorithms · Systems/controls mindset (determinism, safety, logging, fault handling) · Reproducible experiments & documentation\n\nWant the full picture? Download my resume or get in touch."
   }
 ]

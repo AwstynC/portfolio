@@ -2,8 +2,10 @@
 title: "Contact"
 ---
 
-You can reach me here:
+I'd love to hear from you — whether it's about a project, an opportunity, or just to connect.
 
-- **Email:** awstyncordova@gmail.com  
-- **LinkedIn:** https://www.linkedin.com/in/awstyn-cordova-2406b4148/  
-- **GitHub:** https://github.com/AwstynC
+| | |
+|---|---|
+| **Email** | [awstyncordova@gmail.com](mailto:awstyncordova@gmail.com) |
+| **LinkedIn** | [awstyn-cordova](https://www.linkedin.com/in/awstyn-cordova-2406b4148/) |
+| **GitHub** | [AwstynC](https://github.com/AwstynC) |

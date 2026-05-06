@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-04-23">
+<meta name="dcterms.date" content="2025-11-21">
 
-<title>QAOA Final Report: Quantum vs Classical Max-Cut – Awstyn Cordova</title>
+<title>NoteSearch Part 1: Building a Personal Search Engine in C++ – Awstyn Cordova</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -141,7 +176,11 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#project-vision-and-goals" id="toc-project-vision-and-goals" class="nav-link active" data-scroll-target="#project-vision-and-goals">Project Vision and Goals</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#the-inverted-index" id="toc-the-inverted-index" class="nav-link" data-scroll-target="#the-inverted-index">The Inverted Index</a></li>
+  <li><a href="#building-the-index" id="toc-building-the-index" class="nav-link" data-scroll-target="#building-the-index">Building the Index</a></li>
+  <li><a href="#shared-tokenization" id="toc-shared-tokenization" class="nav-link" data-scroll-target="#shared-tokenization">Shared Tokenization</a></li>
+  <li><a href="#search-and-scoring" id="toc-search-and-scoring" class="nav-link" data-scroll-target="#search-and-scoring">Search and Scoring</a></li>
+  <li><a href="#snippet-extraction" id="toc-snippet-extraction" class="nav-link" data-scroll-target="#snippet-extraction">Snippet Extraction</a></li>
   <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a></li>
   <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next</a></li>
   <li><a href="#repository" id="toc-repository" class="nav-link" data-scroll-target="#repository">Repository</a></li>
@@ -153,11 +192,12 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">QAOA Final Report: Quantum vs Classical Max-Cut</h1>
+<h1 class="title">NoteSearch Part 1: Building a Personal Search Engine in C++</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">QAOA</div>
-    <div class="quarto-category">Quantum</div>
-    <div class="quarto-category">Course Project</div>
+    <div class="quarto-category">C++</div>
+    <div class="quarto-category">Search Engine</div>
+    <div class="quarto-category">Data Structures</div>
+    <div class="quarto-category">Personal Project</div>
   </div>
   </div>
 
@@ -169,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 23, 2026</p>
+      <p class="date">November 21, 2025</p>
     </div>
   </div>
   
@@ -183,89 +223,105 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="project-vision-and-goals" class="level2">
 <h2 class="anchored" data-anchor-id="project-vision-and-goals">Project Vision and Goals</h2>
-<p>This project set out to explore how quantum computing approaches the Max-Cut problem differently from classical methods. Using Google’s Cirq library, I implemented the Quantum Approximate Optimization Algorithm (QAOA) and compared it against brute force and greedy classical baselines across graphs ranging from 4 to 30 nodes.</p>
-<p>My six measurable goals were: formulating Max-Cut as an Ising Hamiltonian, implementing QAOA in Cirq, simulating quantum circuits, building classical baselines, evaluating approximation ratios, and analyzing runtime scaling.</p>
+<p>I wanted a fast, private, desktop search tool for my personal notes — something that could scan a folder full of <code>.txt</code> and <code>.md</code> files and surface results by relevance without sending anything to the internet. No Electron, no web server, no cloud. Just a compiled C++ binary that owns its own data.</p>
+<p>The core of the project is an <strong>inverted index</strong> — the same fundamental data structure that powers large-scale search engines. The idea is simple: instead of searching through every file every time a query comes in, you build a map upfront that goes from words to the files they appear in. Lookups then become direct index hits rather than full scans.</p>
+<p>The goals for this first phase were:</p>
+<ul>
+<li>Build an inverted index from a directory of text files</li>
+<li>Support exact and partial (substring) word matching</li>
+<li>Implement multi-word AND search with frequency-based scoring</li>
+<li>Extract a snippet showing where the term appears in the file</li>
+<li>Keep the architecture clean and extensible for future file types</li>
+</ul>
 </section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>All six goals were achieved. Key findings from the scaling experiments:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 18%">
-<col style="width: 20%">
-<col style="width: 17%">
-<col style="width: 18%">
-<col style="width: 18%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>n</th>
-<th>Brute Force</th>
-<th>Greedy Ratio</th>
-<th>QAOA Ratio</th>
-<th>BF Time</th>
-<th>QAOA Time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>4</td>
-<td>10.350</td>
-<td>1.000</td>
-<td>1.000</td>
-<td>~0.000s</td>
-<td>~0.936s</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>45.770</td>
-<td>0.839</td>
-<td>0.959</td>
-<td>0.001s</td>
-<td>~2.054s</td>
-</tr>
-<tr class="odd">
-<td>20</td>
-<td>169.310</td>
-<td>0.899</td>
-<td>0.877</td>
-<td>3.308s</td>
-<td>~6.663s</td>
-</tr>
-<tr class="even">
-<td>25</td>
-<td>255.040</td>
-<td>0.844</td>
-<td>0.894</td>
-<td>157.235s</td>
-<td>~81.803s</td>
-</tr>
-<tr class="odd">
-<td>30</td>
-<td>361.540</td>
-<td>0.839</td>
-<td>0.858</td>
-<td>7058.681s</td>
-<td>~6181.511s</td>
-</tr>
-</tbody>
-</table>
-<p>QAOA consistently outperformed greedy on smaller graphs but both methods degraded at larger sizes, an expected consequence of p=1 circuit depth.</p>
-<p>The most striking result was runtime scaling. At n=30, brute force took <strong>118 minutes</strong> while QAOA simulation took <strong>~103 minutes</strong>. Projecting forward, brute force would take ~43 years at n=50. On real quantum hardware, that same QAOA circuit would run in microseconds.</p>
+<section id="the-inverted-index" class="level2">
+<h2 class="anchored" data-anchor-id="the-inverted-index">The Inverted Index</h2>
+<p>The index structure is defined in <code>Indexer.h</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> Index <span class="op">=</span> <span class="bu">std::</span>unordered_map<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">,</span> <span class="bu">std::</span>unordered_map<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The outer map keys on a word. The inner map keys on a file path and stores the frequency count of that word in that file. So after indexing a directory, a lookup for <code>"algorithm"</code> might return:</p>
+<pre><code>"algorithm" -&gt; {
+    "notes/lecture1.txt": 4,
+    "notes/dsa_review.md": 11,
+    "notes/project.txt": 2
+}</code></pre>
+<p>Frequency matters because it drives the relevance score — a file where your search term appears 11 times is more relevant than one where it appears twice.</p>
+</section>
+<section id="building-the-index" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-index">Building the Index</h2>
+<p>The <code>Indexer</code> class scans a directory, filters for <code>.txt</code> and <code>.md</code> files, reads each one, and populates the index. The entry point is <code>buildIndex()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Indexer<span class="op">::</span>buildIndex<span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>string<span class="op">&amp;</span> directoryPath<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    index<span class="op">.</span>clear<span class="op">();</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> entry <span class="op">:</span> fs<span class="op">::</span>directory_iterator<span class="op">(</span>directoryPath<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>string ext <span class="op">=</span> entry<span class="op">.</span>path<span class="op">().</span>extension<span class="op">().</span>string<span class="op">();</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>ext <span class="op">==</span> <span class="st">".txt"</span> <span class="op">||</span> ext <span class="op">==</span> <span class="st">".md"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            processFile<span class="op">(</span>entry<span class="op">.</span>path<span class="op">().</span>string<span class="op">());</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each file is read into a string and passed to <code>tokenize()</code>, which strips punctuation and converts everything to lowercase. The resulting words are then inserted into the index with their file path and incremented frequency count:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> word <span class="op">:</span> words<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    index<span class="op">[</span>word<span class="op">][</span>filePath<span class="op">]</span> <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="shared-tokenization" class="level2">
+<h2 class="anchored" data-anchor-id="shared-tokenization">Shared Tokenization</h2>
+<p>Both the <code>Indexer</code> and <code>SearchEngine</code> need to tokenize text — the indexer when building, the engine when processing a query. Having two separate implementations would risk inconsistency, so tokenization lives in a shared header <code>Tokenizer.h</code> as an <code>inline</code> free function:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> tokenize<span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>string<span class="op">&amp;</span> text<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> tokens<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string current<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">char</span> c <span class="op">:</span> text<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">unsigned</span> <span class="dt">char</span> uc <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">unsigned</span> <span class="dt">char</span><span class="op">&gt;(</span>c<span class="op">);</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span><span class="bu">std::</span>isalnum<span class="op">(</span>uc<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            current <span class="op">+=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;(</span><span class="bu">std::</span>tolower<span class="op">(</span>uc<span class="op">));</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>current<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            tokens<span class="op">.</span>push_back<span class="op">(</span>current<span class="op">);</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            current<span class="op">.</span>clear<span class="op">();</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>current<span class="op">.</span>empty<span class="op">())</span> tokens<span class="op">.</span>push_back<span class="op">(</span>current<span class="op">);</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tokens<span class="op">;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Using <code>inline</code> here is intentional — it tells the linker to expect this definition in multiple translation units and merge them, avoiding duplicate symbol errors without needing a separate <code>.cpp</code> file.</p>
+</section>
+<section id="search-and-scoring" class="level2">
+<h2 class="anchored" data-anchor-id="search-and-scoring">Search and Scoring</h2>
+<p>The <code>SearchEngine</code> class takes a const reference to the completed index — no copy, just a view into the data the <code>Indexer</code> already owns.</p>
+<p>Queries are tokenized the same way as the index content, which guarantees that <code>"Binary Tree"</code> and <code>"binary tree"</code> resolve to the same tokens and hit the same index entries.</p>
+<p>For each query term, <code>getFilesForTerm()</code> first checks for an exact match, then falls back to substring matching across all index keys:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exact match</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> index<span class="op">.</span>find<span class="op">(</span>term<span class="op">);</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Partial match fallback</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> kv <span class="op">:</span> index<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>kv<span class="op">.</span>first<span class="op">.</span>find<span class="op">(</span>term<span class="op">)</span> <span class="op">!=</span> <span class="bu">std::</span>string::npos<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// accumulate scores</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means searching <code>"tree"</code> will also surface files containing <code>"trees"</code> or <code>"subtree"</code> — useful when you don’t remember the exact form of a word.</p>
+<p>Multi-word queries apply AND logic: a file must contain matches for every term to appear in results. The total score is the sum of frequencies across all matched terms, and results are sorted highest score first with alphabetical tie-breaking.</p>
+</section>
+<section id="snippet-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="snippet-extraction">Snippet Extraction</h2>
+<p>Results include a short preview showing where the term appears in the file. <code>extractSnippet()</code> finds the first occurrence of the search word in the file content and returns a 120-character window centered around it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> window <span class="op">=</span> <span class="dv">60</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>size_t start <span class="op">=</span> <span class="op">(</span>pos <span class="op">&gt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="bu">std::</span>size_t<span class="op">&gt;(</span>window<span class="op">))</span> <span class="op">?</span> pos <span class="op">-</span> window <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>size_t end <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>pos <span class="op">+</span> lowerWord<span class="op">.</span>length<span class="op">()</span> <span class="op">+</span> window<span class="op">,</span> content<span class="op">.</span>size<span class="op">());</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>string snippet <span class="op">=</span> content<span class="op">.</span>substr<span class="op">(</span>start<span class="op">,</span> end <span class="op">-</span> start<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Newlines are replaced with spaces so the snippet renders cleanly on a single line, wrapped in <code>...</code> ellipses.</p>
 </section>
 <section id="reflection" class="level2">
 <h2 class="anchored" data-anchor-id="reflection">Reflection</h2>
-<p>The hardest part was finding research that explained expected results without giving away the implementation. Significant work constraints — four week-long field projects and a two-week remote dam maintenance assignment — made data collection difficult. The unexpected passing of my last close grandparent added further challenge during the project period.</p>
-<p>The most surprising finding was QAOA occasionally losing to greedy. This turned out to be expected behavior at p=1 under classical simulation constraints and is not a flaw in the implementation.</p>
+<p>The trickiest part was getting the AND search logic right with partial matching in play. Because <code>getFilesForTerm()</code> returns files for both exact and substring hits, a file can satisfy a term match via a substring even if the exact word doesn’t appear. That’s by design, but it’s worth understanding — searching <code>"hash table"</code> could match a file containing <code>"hashtable"</code> and <code>"turntable"</code> even if neither exact word appears independently.</p>
+<p>The architecture decision I’m most satisfied with is keeping tokenization shared and consistent. It’s a small thing but eliminates an entire class of subtle bugs where the indexer and search engine would process text differently.</p>
 </section>
 <section id="whats-next" class="level2">
 <h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
-<p>Given more time I would run circuits on real quantum hardware via IBM Quantum, implement higher p values to show quality improvement with circuit depth, and benchmark against the Goemans-Williamson semidefinite programming approach.</p>
+<p>The backend is complete and tested. The next phase is wrapping it in a proper desktop GUI using Qt Widgets — a native Windows application with a directory picker, search bar, and results list, all backed by the same pure C++ engine built here.</p>
 </section>
 <section id="repository" class="level2">
 <h2 class="anchored" data-anchor-id="repository">Repository</h2>
-<p>Full code: <a href="https://github.com/AwstynC/QAOA_MaxCut">https://github.com/AwstynC/QAOA_MaxCut</a></p>
+<p>Full code: <a href="https://github.com/AwstynC/NoteSearch.git">https://github.com/AwstynC/NoteSearch.git</a></p>
 
 
 </section>

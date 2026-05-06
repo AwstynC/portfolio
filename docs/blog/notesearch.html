@@ -80,9 +80,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -160,12 +160,8 @@ window.Quarto = {
 <span class="menu-text">Course Project Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../skills.html"> 
-<span class="menu-text">Technical Skills</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../education.html"> 
-<span class="menu-text">Education</span></a>
+    <a class="nav-link" href="../background.html"> 
+<span class="menu-text">Background</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../resume.html"> 
@@ -200,7 +196,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QyUyQiUyQg==">C++ <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YSUyMFN0cnVjdHVyZXM=">Data Structures <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGVyc29uYWwlMjBQcm9qZWN0">Personal Project <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2VhcmNoJTIwRW5naW5l">Search Engine <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -230,7 +226,39 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="QyUyQiUyQiUyQ1NlYXJjaCUyMEVuZ2luZSUyQ0RhdGElMjBTdHJ1Y3R1cmVzJTJDUGVyc29uYWwlMjBQcm9qZWN0" data-listing-date-sort="1763708400000" data-listing-file-modified-sort="1778027381740" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="952">
+<div class="thumbnail"><a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">
 
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">NoteSearch Part 1: Building a Personal Search Engine in C++</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QyUyQiUyQg=='); return false;">C++</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2VhcmNoJTIwRW5naW5l'); return false;">Search Engine</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFN0cnVjdHVyZXM='); return false;">Data Structures</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWwlMjBQcm9qZWN0'); return false;">Personal Project</div>
+
+</div>
+<div class="delink listing-description"><a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">
+I wanted a fast, private, desktop search tool for my personal notes — something that could scan a folder full of <code>.txt</code> and <code>.md</code> files and surface results by relevance without…
+</a></div>
+</div>
+<div class="metadata">
+<a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">
+<div class="listing-date">
+Nov 21, 2025
+</div>
+</a>
+</div>
+</div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->

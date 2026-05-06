@@ -1,0 +1,178 @@
+---
+title: "NoteSearch Part 1: Building a Personal Search Engine in C++"
+date: "2025-11-21"
+categories: [C++, Search Engine, Data Structures, Personal Project]
+---
+
+## Project Vision and Goals
+
+I wanted a fast, private, desktop search tool for my personal notes — something
+that could scan a folder full of `.txt` and `.md` files and surface results by
+relevance without sending anything to the internet. No Electron, no web server,
+no cloud. Just a compiled C++ binary that owns its own data.
+
+The core of the project is an **inverted index** — the same fundamental data
+structure that powers large-scale search engines. The idea is simple: instead of
+searching through every file every time a query comes in, you build a map upfront
+that goes from words to the files they appear in. Lookups then become direct
+index hits rather than full scans.
+
+The goals for this first phase were:
+
+- Build an inverted index from a directory of text files
+- Support exact and partial (substring) word matching
+- Implement multi-word AND search with frequency-based scoring
+- Extract a snippet showing where the term appears in the file
+- Keep the architecture clean and extensible for future file types
+
+## The Inverted Index
+
+The index structure is defined in `Indexer.h`:
+
+```cpp
+using Index = std::unordered_map<std::string, std::unordered_map<std::string, int>>;
+```
+
+The outer map keys on a word. The inner map keys on a file path and stores the
+frequency count of that word in that file. So after indexing a directory, a
+lookup for `"algorithm"` might return:
+
+```
+"algorithm" -> {
+    "notes/lecture1.txt": 4,
+    "notes/dsa_review.md": 11,
+    "notes/project.txt": 2
+}
+```
+
+Frequency matters because it drives the relevance score — a file where your
+search term appears 11 times is more relevant than one where it appears twice.
+
+## Building the Index
+
+The `Indexer` class scans a directory, filters for `.txt` and `.md` files, reads
+each one, and populates the index. The entry point is `buildIndex()`:
+
+```cpp
+void Indexer::buildIndex(const std::string& directoryPath) {
+    index.clear();
+    for (const auto& entry : fs::directory_iterator(directoryPath)) {
+        std::string ext = entry.path().extension().string();
+        if (ext == ".txt" || ext == ".md") {
+            processFile(entry.path().string());
+        }
+    }
+}
+```
+
+Each file is read into a string and passed to `tokenize()`, which strips
+punctuation and converts everything to lowercase. The resulting words are then
+inserted into the index with their file path and incremented frequency count:
+
+```cpp
+for (const auto& word : words) {
+    index[word][filePath] += 1;
+}
+```
+
+## Shared Tokenization
+
+Both the `Indexer` and `SearchEngine` need to tokenize text — the indexer when
+building, the engine when processing a query. Having two separate implementations
+would risk inconsistency, so tokenization lives in a shared header `Tokenizer.h`
+as an `inline` free function:
+
+```cpp
+inline std::vector<std::string> tokenize(const std::string& text) {
+    std::vector<std::string> tokens;
+    std::string current;
+
+    for (char c : text) {
+        unsigned char uc = static_cast<unsigned char>(c);
+        if (std::isalnum(uc)) {
+            current += static_cast<char>(std::tolower(uc));
+        } else if (!current.empty()) {
+            tokens.push_back(current);
+            current.clear();
+        }
+    }
+    if (!current.empty()) tokens.push_back(current);
+    return tokens;
+}
+```
+
+Using `inline` here is intentional — it tells the linker to expect this
+definition in multiple translation units and merge them, avoiding duplicate
+symbol errors without needing a separate `.cpp` file.
+
+## Search and Scoring
+
+The `SearchEngine` class takes a const reference to the completed index — no
+copy, just a view into the data the `Indexer` already owns.
+
+Queries are tokenized the same way as the index content, which guarantees that
+`"Binary Tree"` and `"binary tree"` resolve to the same tokens and hit the same
+index entries.
+
+For each query term, `getFilesForTerm()` first checks for an exact match, then
+falls back to substring matching across all index keys:
+
+```cpp
+// Exact match
+auto it = index.find(term);
+
+// Partial match fallback
+for (const auto& kv : index) {
+    if (kv.first.find(term) != std::string::npos) {
+        // accumulate scores
+    }
+}
+```
+
+This means searching `"tree"` will also surface files containing `"trees"` or
+`"subtree"` — useful when you don't remember the exact form of a word.
+
+Multi-word queries apply AND logic: a file must contain matches for every term
+to appear in results. The total score is the sum of frequencies across all
+matched terms, and results are sorted highest score first with alphabetical
+tie-breaking.
+
+## Snippet Extraction
+
+Results include a short preview showing where the term appears in the file.
+`extractSnippet()` finds the first occurrence of the search word in the file
+content and returns a 120-character window centered around it:
+
+```cpp
+int window = 60;
+std::size_t start = (pos > static_cast<std::size_t>(window)) ? pos - window : 0;
+std::size_t end = std::min(pos + lowerWord.length() + window, content.size());
+std::string snippet = content.substr(start, end - start);
+```
+
+Newlines are replaced with spaces so the snippet renders cleanly on a single
+line, wrapped in `...` ellipses.
+
+## Reflection
+
+The trickiest part was getting the AND search logic right with partial matching
+in play. Because `getFilesForTerm()` returns files for both exact and substring
+hits, a file can satisfy a term match via a substring even if the exact word
+doesn't appear. That's by design, but it's worth understanding — searching
+`"hash table"` could match a file containing `"hashtable"` and `"turntable"`
+even if neither exact word appears independently.
+
+The architecture decision I'm most satisfied with is keeping tokenization shared
+and consistent. It's a small thing but eliminates an entire class of subtle bugs
+where the indexer and search engine would process text differently.
+
+## What's Next
+
+The backend is complete and tested. The next phase is wrapping it in a proper
+desktop GUI using Qt Widgets — a native Windows application with a directory
+picker, search bar, and results list, all backed by the same pure C++ engine
+built here.
+
+## Repository
+
+Full code: [https://github.com/AwstynC/NoteSearch.git](https://github.com/AwstynC/NoteSearch.git)
