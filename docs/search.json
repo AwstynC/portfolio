@@ -151,7 +151,7 @@
     "href": "blog/index.html",
     "title": "Projects Blog",
     "section": "",
-    "text": "A running log of progress, decisions, and lessons learned across my personal and course projects.\n\n\n\n⚛️ QAOA Project\nQuantum computing · Course project\nExploring QAOA for combinatorial problems like Max-Cut. Posts cover circuit construction, graph setup, parameter tuning, and evaluation.\nView posts →\n\n\n🔍 NoteSearch (C++)\nC++ · Data structures · Personal project\nBuilding a fast, private desktop search tool for personal notes using an inverted index. Posts cover architecture decisions, indexing strategies, and performance.\nView posts →"
+    "text": "A running log of progress, decisions, and lessons learned across my personal and course projects.\n\n\n\n⚛️ QAOA Project\nQuantum computing · Course project\nExploring QAOA for combinatorial problems like Max-Cut. Posts cover circuit construction, graph setup, parameter tuning, and evaluation.\nView posts →\n\n\n🔍 NoteSearch\nC++ · Data structures · Personal project\nBuilding a fast, private desktop search tool for personal notes using an inverted index. Posts cover architecture decisions, indexing strategies, and performance.\nView posts →"
   },
   {
     "objectID": "blog/posts/qaoa/2026-02-19-qaoa-update.html",

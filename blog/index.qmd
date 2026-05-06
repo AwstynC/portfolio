@@ -18,7 +18,7 @@ Exploring QAOA for combinatorial problems like Max-Cut. Posts cover circuit cons
 :::
 
 ::: {.g-col-12 .g-col-md-6 .card .p-4}
-### 🔍 NoteSearch (C++)
+### 🔍 NoteSearch
 **C++ · Data structures · Personal project**
 
 Building a fast, private desktop search tool for personal notes using an inverted index. Posts cover architecture decisions, indexing strategies, and performance.
