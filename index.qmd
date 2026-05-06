@@ -11,7 +11,6 @@ I am an electrical engineer with a strong interest in building, understanding, a
 
 I am particularly drawn to high-reliability environments where careful design, structured thinking, and disciplined execution matter.
 
-[View my background →](background.qmd)   [Contact me →](contact.qmd)
 :::
 
 :::{.column width="35%"}
