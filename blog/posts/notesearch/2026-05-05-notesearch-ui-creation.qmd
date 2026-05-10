@@ -1,0 +1,116 @@
+---
+title: "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets"
+date: "2026-05-05"
+categories: [C++, Qt, Desktop, Personal Project]
+---
+
+## From Terminal to Desktop
+
+The backend for NoteSearch was complete — a working inverted index, keyword
+search, scoring, and snippet extraction, all in pure C++. But it lived behind
+a terminal loop. For a tool I actually want to use every day, that isn't good
+enough. This phase was about wrapping that engine in a proper desktop application
+using Qt Widgets.
+
+The guiding principle throughout was clean separation: the backend knows nothing
+about Qt, and Qt knows nothing about the indexing logic. The UI is a shell that
+passes user input in and displays results out. Nothing more.
+
+## Why Qt
+
+For a personal desktop tool that lives entirely offline with no web dependencies,
+the realistic C++ UI options are Qt, wxWidgets, and Dear ImGui. Qt stood out for
+two reasons. First, it produces genuinely professional-looking native applications
+on Windows without much effort. Second, Qt is widely used in industry; embedded
+systems, desktop software, internal tooling makes for a great learning opportunity.
+The cross platform nature of Qt is a bonus, but Windows is the primary target for this project.
+
+The version used here is Qt 6 with MinGW on Windows, built and managed through
+Qt Creator and CMake.
+
+## Architecture: The Shell Pattern
+
+The most important decision in this phase wasn't about UI design — it was about
+where the boundary between Qt and C++ sits. The rule I set was strict:
+
+- `Indexer`, `SearchEngine`, and `Tokenizer` are pure C++ with no Qt includes
+- `MainWindow` is the only place Qt lives, and it only calls into the backend
+  through standard C++ interfaces using `std::string` and `std::vector`
+
+This means the backend could be dropped into any other frontend — a CLI, a
+different GUI framework, or a web server — without touching a single line of
+indexing or search logic. Qt is genuinely just a shell.
+
+The data flow is straightforward:
+
+```
+User action in Qt UI
+    → MainWindow converts Qt types to std::string
+        → Indexer / SearchEngine does its work
+            → Results returned as std::vector
+                → MainWindow converts back to Qt types for display
+```
+
+The conversion points are small and explicit. `QString::toStdString()` going in,
+`QString::fromStdString()` coming out. That's the entire surface area between
+the two worlds.
+
+## What the UI Does
+
+The interface is intentionally minimal. There are three interactive elements:
+
+- A directory input and Browse button that opens a native folder picker and
+  triggers index building
+- A search input and Search button (also triggered by pressing Enter) that runs
+  a query against the built index
+- A results list that shows each matching file with its relevance score and a
+  snippet preview
+
+When a directory is selected, the index builds immediately and the results area
+confirms how many unique terms were found. Searches from that point are fast
+since the index is already in memory.
+
+## Keeping the Build Clean
+
+Integrating Qt into an existing C++ project required updating the CMake
+configuration to declare Qt dependencies and tell the compiler where to find
+the backend headers:
+
+```cmake
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+
+target_include_directories(SearchEngine PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+```
+
+The `include/` directory holds the backend headers and `src/` holds all source
+files. Keeping them separate makes it visually clear which code belongs to the
+engine and which belongs to the UI.
+
+## Reflection
+
+The separation of concerns principle paid off immediately during integration.
+Because the backend had no Qt dependencies, dropping it into the Qt project was
+straightforward — update CMake, include the headers in `MainWindow`, and call
+the same functions that were already working in the terminal version. There was
+no refactoring of backend logic at all.
+
+The Qt learning curve was real but manageable. Qt Creator's UI designer makes
+laying out widgets intuitive, and Qt's signal and slot system for connecting
+button clicks to handler functions is clean once the mental model clicks. The
+trickiest part was getting CMake and Qt Creator to agree on where the source
+files lived, particularly after reorganizing the project into `src/` and
+`include/` subdirectories.
+
+## What's Next
+
+The next phase is extending the indexer to support `.pdf` and `.docx` files,
+keeping the same architecture — pure C++ parsers in the backend, no Qt involved
+in the parsing logic. The UI will surface file type information in the results
+list once that support is in place.
+
+## Repository
+
+Full code: [https://github.com/AwstynC/NoteSearch](https://github.com/AwstynC/NoteSearch)

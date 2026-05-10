@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-05-06">
 
-<title>NoteSearch Project Blog – Awstyn Cordova</title>
+<title>NoteSearch Part 3: Extending the Engine to Word Documents – Awstyn Cordova</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,29 +21,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-cc1d64809b8ed731f92ea1275fe9f05b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-cc1d64809b8ed731f92ea1275fe9f05b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,82 +104,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -155,7 +117,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Awstyn Cordova</span>
     </a>
   </div>
@@ -166,23 +128,23 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../blog/index.html"> 
+    <a class="nav-link" href="../../../blog/index.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../background.html"> 
+    <a class="nav-link" href="../../../background.html"> 
 <span class="menu-text">Background</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resume.html"> 
+    <a class="nav-link" href="../../../resume.html"> 
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../contact.html"> 
+    <a class="nav-link" href="../../../contact.html"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -209,21 +171,46 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="QyUyQiUyQg==">C++ <span class="quarto-category-count">(3)</span></div><div class="category" data-category="RGF0YSUyMFN0cnVjdHVyZXM=">Data Structures <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVza3RvcA==">Desktop <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UGVyc29uYWwlMjBQcm9qZWN0">Personal Project <span class="quarto-category-count">(3)</span></div><div class="category" data-category="UXQ=">Qt <span class="quarto-category-count">(2)</span></div><div class="category" data-category="U2VhcmNoJTIwRW5naW5l">Search Engine <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#where-we-left-off" id="toc-where-we-left-off" class="nav-link active" data-scroll-target="#where-we-left-off">Where We Left Off</a></li>
+  <li><a href="#the-challenge-with-word-documents" id="toc-the-challenge-with-word-documents" class="nav-link" data-scroll-target="#the-challenge-with-word-documents">The Challenge with Word Documents</a></li>
+  <li><a href="#keeping-the-architecture-clean" id="toc-keeping-the-architecture-clean" class="nav-link" data-scroll-target="#keeping-the-architecture-clean">Keeping the Architecture Clean</a></li>
+  <li><a href="#integrating-the-libraries" id="toc-integrating-the-libraries" class="nav-link" data-scroll-target="#integrating-the-libraries">Integrating the Libraries</a></li>
+  <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a></li>
+  <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next</a></li>
+  <li><a href="#repository" id="toc-repository" class="nav-link" data-scroll-target="#repository">Repository</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">NoteSearch Project Blog</h1>
-</div>
+<h1 class="title">NoteSearch Part 3: Extending the Engine to Word Documents</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">C++</div>
+    <div class="quarto-category">Qt</div>
+    <div class="quarto-category">Desktop</div>
+    <div class="quarto-category">Personal Project</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 6, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -233,115 +220,62 @@ window.Quarto = {
 </header>
 
 
-<p>Development notes for my C++ NoteSearch project.</p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="QyUyQiUyQiUyQ1F0JTJDRGVza3RvcCUyQ1BlcnNvbmFsJTIwUHJvamVjdA==" data-listing-date-sort="1778047200000" data-listing-file-modified-sort="1778272144500" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="613">
-<div class="thumbnail"><a href="../blog/posts/notesearch/2026-05-06-notesearch-docx-support.html" class="no-external">
-
-<p class="card-img-top"><img src="posts\blog_images\notesearch_mainwindow.png" alt="NoteSearch main application window"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/posts/notesearch/2026-05-06-notesearch-docx-support.html" class="no-external">NoteSearch Part 3: Extending the Engine to Word Documents</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QyUyQiUyQg=='); return false;">C++</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UXQ='); return false;">Qt</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVza3RvcA=='); return false;">Desktop</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWwlMjBQcm9qZWN0'); return false;">Personal Project</div>
-
+<section id="where-we-left-off" class="level2">
+<h2 class="anchored" data-anchor-id="where-we-left-off">Where We Left Off</h2>
+<p>At the end of Part 2, NoteSearch was a functioning desktop application capable of indexing and searching through <code>.txt</code> and <code>.md</code> files. The backend was pure C++, the Qt UI was a clean shell around it, and the two were deliberately kept separate. The natural next step was extending the indexer to handle richer document formats — starting with <code>.docx</code>.</p>
+</section>
+<section id="the-challenge-with-word-documents" class="level2">
+<h2 class="anchored" data-anchor-id="the-challenge-with-word-documents">The Challenge with Word Documents</h2>
+<p>Word documents aren’t a simple text format. A <code>.docx</code> file is actually a ZIP archive containing a collection of XML files. The document content lives inside <code>word/document.xml</code>, wrapped in a hierarchy of XML tags. To extract searchable text, you have to unzip the archive, locate that file, parse the XML, and pull out the text nodes — all before tokenization can even begin.</p>
+<p>This required two external libraries: <strong>miniz</strong> for ZIP extraction and <strong>pugixml</strong> for XML parsing. Both are pure C++ with no external dependencies, which kept the backend clean and Qt-free.</p>
+</section>
+<section id="keeping-the-architecture-clean" class="level2">
+<h2 class="anchored" data-anchor-id="keeping-the-architecture-clean">Keeping the Architecture Clean</h2>
+<p>The same separation principle from Part 2 applied here. The new <code>DocxParser</code> lives entirely in the backend — it takes a file path, does its work, and returns a plain <code>std::string</code> of extracted text. Qt never touches it. The <code>Indexer</code> calls it the same way it calls the plain text reader, and the result flows through the same <code>tokenize()</code> pipeline as everything else.</p>
+<p>From the <code>Indexer</code>’s perspective, a <code>.docx</code> file is just another source of text. The file type handling is a single branch:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>ext <span class="op">==</span> <span class="st">".txt"</span> <span class="op">||</span> ext <span class="op">==</span> <span class="st">".md"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    processFile<span class="op">(</span>entry<span class="op">.</span>path<span class="op">().</span>string<span class="op">());</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>ext <span class="op">==</span> <span class="st">".docx"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    processDocx<span class="op">(</span>entry<span class="op">.</span>path<span class="op">().</span>string<span class="op">());</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Everything downstream — tokenization, indexing, scoring, snippet extraction — is completely unchanged.</p>
+</section>
+<section id="integrating-the-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="integrating-the-libraries">Integrating the Libraries</h2>
+<p>Getting miniz and pugixml into the project was more involved than expected. Both libraries ship as multiple files rather than true single-header drops, and the CMake configuration needed explicit source file declarations and language properties to compile the C files correctly in a C++ project. Downloading the full release packages rather than individual files resolved most of the integration friction.</p>
+<p>Once the libraries were correctly wired into CMakeLists.txt, the actual <code>DocxParser</code> implementation was straightforward — open the ZIP, locate <code>word/document.xml</code>, extract it into memory, parse the XML with pugixml, walk the <code>&lt;w:t&gt;</code> nodes, and concatenate the text content.</p>
+</section>
+<section id="the-application" class="level2">
+<h2 class="anchored" data-anchor-id="the-application">The Application</h2>
+<p>Here is the main NoteSearch window after indexing a directory containing a mix of <code>.txt</code>, <code>.md</code>, and <code>.docx</code> files:</p>
+<p><img src="../blog_images/notesearch_mainwindow.png" class="img-fluid" alt="NoteSearch main application window"> <img src="../blog_images/notesearch_wordcount_index.png" class="img-fluid" alt="Word count index view"></p>
+<p>The interface is intentionally minimal consisting of a directory picker, a search bar, and a results list. After selecting a folder the index builds immediately and the result area confirms how many unique terms were found across all supported file types.</p>
+<p>Searching across a directory containing both plain text and Word documents returns results from all file types together, ranked by relevance score:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../blog_images/notesearch_results_docx_txt.png" class="img-fluid figure-img"></p>
+<figcaption>Search results across docx and txt files</figcaption>
+</figure>
 </div>
-<div class="delink listing-description"><a href="../blog/posts/notesearch/2026-05-06-notesearch-docx-support.html" class="no-external">
-At the end of Part 2, NoteSearch was a functioning desktop application capable of indexing and searching through <code>.txt</code> and <code>.md</code> files. The backend was pure C++, the Qt UI was…<code></code>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/posts/notesearch/2026-05-06-notesearch-docx-support.html" class="no-external">
-<div class="listing-date">
-May 6, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="QyUyQiUyQiUyQ1F0JTJDRGVza3RvcCUyQ1BlcnNvbmFsJTIwUHJvamVjdA==" data-listing-date-sort="1777960800000" data-listing-file-modified-sort="1778271387927" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="696">
-<div class="thumbnail"><a href="../blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html" class="no-external">
+<p>Each result shows the file path, its relevance score, and a snippet preview showing where the term appears in the document. The word count index confirms the breadth of what was indexed.</p>
+</section>
+<section id="reflection" class="level2">
+<h2 class="anchored" data-anchor-id="reflection">Reflection</h2>
+<p>The architectural decision to keep the backend Qt-free continued to pay dividends here. Adding an entirely new file format required no changes to the UI, no changes to the search logic, and no changes to the tokenizer. The only new code was the parser itself and a single branch in the indexer.</p>
+<p>The library integration was the roughest part of this phase. Working with C libraries inside a C++ CMake project on Windows with MinGW introduced several friction points around file discovery and compilation flags that wouldn’t have been issues on Linux. The lesson is to always download full library releases rather than cherry-picking individual files from a repository.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<p>PDF support is the next planned extension, following the same pattern — a pure C++ <code>PdfParser</code> in the backend, no Qt involvement, same tokenization pipeline. Once both formats are supported the application will cover the full range of personal note formats most people actually use.</p>
+</section>
+<section id="repository" class="level2">
+<h2 class="anchored" data-anchor-id="repository">Repository</h2>
+<p>Full code: <a href="https://github.com/AwstynC/NoteSearch">https://github.com/AwstynC/NoteSearch</a></p>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html" class="no-external">NoteSearch Part 2: Adding a Desktop UI with Qt Widgets</a>
-</h3>
-<div class="listing-categories">
+</section>
 
-<div class="listing-category" onclick="window.quartoListingCategory('QyUyQiUyQg=='); return false;">C++</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UXQ='); return false;">Qt</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVza3RvcA=='); return false;">Desktop</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWwlMjBQcm9qZWN0'); return false;">Personal Project</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html" class="no-external">
-The backend for NoteSearch was complete — a working inverted index, keyword search, scoring, and snippet extraction, all in pure C++. But it lived behind a terminal loop.…
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html" class="no-external">
-<div class="listing-date">
-May 5, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="QyUyQiUyQiUyQ1NlYXJjaCUyMEVuZ2luZSUyQ0RhdGElMjBTdHJ1Y3R1cmVzJTJDUGVyc29uYWwlMjBQcm9qZWN0" data-listing-date-sort="1763708400000" data-listing-file-modified-sort="1778027381740" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="952">
-<div class="thumbnail"><a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">NoteSearch Part 1: Building a Personal Search Engine in C++</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QyUyQiUyQg=='); return false;">C++</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U2VhcmNoJTIwRW5naW5l'); return false;">Search Engine</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFN0cnVjdHVyZXM='); return false;">Data Structures</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWwlMjBQcm9qZWN0'); return false;">Personal Project</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">
-I wanted a fast, private, desktop search tool for my personal notes — something that could scan a folder full of <code>.txt</code> and <code>.md</code> files and surface results by relevance without…
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/posts/notesearch/2025-11-21-notesearch-initial.html" class="no-external">
-<div class="listing-date">
-Nov 21, 2025
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -747,5 +681,5 @@ Nov 21, 2025
 
 
 
-<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

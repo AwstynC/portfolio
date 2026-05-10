@@ -144,7 +144,7 @@
     "href": "blog/notesearch.html",
     "title": "NoteSearch Project Blog",
     "section": "",
-    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSearch Part 1: Building a Personal Search Engine in C++\n\n\n\nC++\n\nSearch Engine\n\nData Structures\n\nPersonal Project\n\n\n\n\n\n\n\n\n\nNov 21, 2025\n\n\n\n\n\nNo matching items"
+    "text": "Development notes for my C++ NoteSearch project.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSearch Part 3: Extending the Engine to Word Documents\n\n\n\nC++\n\nQt\n\nDesktop\n\nPersonal Project\n\n\n\n\n\n\n\n\n\nMay 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSearch Part 2: Adding a Desktop UI with Qt Widgets\n\n\n\nC++\n\nQt\n\nDesktop\n\nPersonal Project\n\n\n\n\n\n\n\n\n\nMay 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSearch Part 1: Building a Personal Search Engine in C++\n\n\n\nC++\n\nSearch Engine\n\nData Structures\n\nPersonal Project\n\n\n\n\n\n\n\n\n\nNov 21, 2025\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/index.html",
@@ -327,5 +327,131 @@
     "title": "Projects Blog",
     "section": "🔍 NoteSearch (C++)",
     "text": "🔍 NoteSearch (C++)\n\n\n\n\n\n\n\n\nNoteSearch Part 1: Building a Personal Search Engine in C++\n\n\n\n\n\n\n\n\n\nNov 21, 2025\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "",
+    "text": "The backend for NoteSearch was complete — a working inverted index, keyword search, scoring, and snippet extraction, all in pure C++. But it lived behind a terminal loop. For a tool I actually want to use every day, that isn’t good enough. This phase was about wrapping that engine in a proper desktop application using Qt Widgets.\nThe guiding principle throughout was clean separation: the backend knows nothing about Qt, and Qt knows nothing about the indexing logic. The UI is a shell that passes user input in and displays results out. Nothing more."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#from-terminal-to-desktop",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#from-terminal-to-desktop",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "",
+    "text": "The backend for NoteSearch was complete — a working inverted index, keyword search, scoring, and snippet extraction, all in pure C++. But it lived behind a terminal loop. For a tool I actually want to use every day, that isn’t good enough. This phase was about wrapping that engine in a proper desktop application using Qt Widgets.\nThe guiding principle throughout was clean separation: the backend knows nothing about Qt, and Qt knows nothing about the indexing logic. The UI is a shell that passes user input in and displays results out. Nothing more."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#why-qt",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#why-qt",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "Why Qt",
+    "text": "Why Qt\nFor a personal desktop tool that lives entirely offline with no web dependencies, the realistic C++ UI options are Qt, wxWidgets, and Dear ImGui. Qt stood out for two reasons. First, it produces genuinely professional-looking native applications on Windows without much effort. Second, Qt is widely used in industry; embedded systems, desktop software, internal tooling makes for a great learning opportunity. The cross platform nature of Qt is a bonus, but Windows is the primary target for this project.\nThe version used here is Qt 6 with MinGW on Windows, built and managed through Qt Creator and CMake."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#architecture-the-shell-pattern",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#architecture-the-shell-pattern",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "Architecture: The Shell Pattern",
+    "text": "Architecture: The Shell Pattern\nThe most important decision in this phase wasn’t about UI design — it was about where the boundary between Qt and C++ sits. The rule I set was strict:\n\nIndexer, SearchEngine, and Tokenizer are pure C++ with no Qt includes\nMainWindow is the only place Qt lives, and it only calls into the backend through standard C++ interfaces using std::string and std::vector\n\nThis means the backend could be dropped into any other frontend — a CLI, a different GUI framework, or a web server — without touching a single line of indexing or search logic. Qt is genuinely just a shell.\nThe data flow is straightforward:\nUser action in Qt UI\n    → MainWindow converts Qt types to std::string\n        → Indexer / SearchEngine does its work\n            → Results returned as std::vector\n                → MainWindow converts back to Qt types for display\nThe conversion points are small and explicit. QString::toStdString() going in, QString::fromStdString() coming out. That’s the entire surface area between the two worlds."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#what-the-ui-does",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#what-the-ui-does",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "What the UI Does",
+    "text": "What the UI Does\nThe interface is intentionally minimal. There are three interactive elements:\n\nA directory input and Browse button that opens a native folder picker and triggers index building\nA search input and Search button (also triggered by pressing Enter) that runs a query against the built index\nA results list that shows each matching file with its relevance score and a snippet preview\n\nWhen a directory is selected, the index builds immediately and the results area confirms how many unique terms were found. Searches from that point are fast since the index is already in memory."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#keeping-the-build-clean",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#keeping-the-build-clean",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "Keeping the Build Clean",
+    "text": "Keeping the Build Clean\nIntegrating Qt into an existing C++ project required updating the CMake configuration to declare Qt dependencies and tell the compiler where to find the backend headers:\nfind_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)\n\ntarget_include_directories(SearchEngine PRIVATE\n    ${CMAKE_CURRENT_SOURCE_DIR}/include\n    ${CMAKE_CURRENT_SOURCE_DIR}/src\n)\nThe include/ directory holds the backend headers and src/ holds all source files. Keeping them separate makes it visually clear which code belongs to the engine and which belongs to the UI."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#reflection",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#reflection",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "Reflection",
+    "text": "Reflection\nThe separation of concerns principle paid off immediately during integration. Because the backend had no Qt dependencies, dropping it into the Qt project was straightforward — update CMake, include the headers in MainWindow, and call the same functions that were already working in the terminal version. There was no refactoring of backend logic at all.\nThe Qt learning curve was real but manageable. Qt Creator’s UI designer makes laying out widgets intuitive, and Qt’s signal and slot system for connecting button clicks to handler functions is clean once the mental model clicks. The trickiest part was getting CMake and Qt Creator to agree on where the source files lived, particularly after reorganizing the project into src/ and include/ subdirectories."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#whats-next",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#whats-next",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "What’s Next",
+    "text": "What’s Next\nThe next phase is extending the indexer to support .pdf and .docx files, keeping the same architecture — pure C++ parsers in the backend, no Qt involved in the parsing logic. The UI will surface file type information in the results list once that support is in place."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#repository",
+    "href": "blog/posts/notesearch/2026-05-05-notesearch-ui-creation.html#repository",
+    "title": "NoteSearch Part 2: Adding a Desktop UI with Qt Widgets",
+    "section": "Repository",
+    "text": "Repository\nFull code: https://github.com/AwstynC/NoteSearch"
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "",
+    "text": "At the end of Part 2, NoteSearch was a functioning desktop application capable of indexing and searching through .txt and .md files. The backend was pure C++, the Qt UI was a clean shell around it, and the two were deliberately kept separate. The natural next step was extending the indexer to handle richer document formats — starting with .docx."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#where-we-left-off",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#where-we-left-off",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "",
+    "text": "At the end of Part 2, NoteSearch was a functioning desktop application capable of indexing and searching through .txt and .md files. The backend was pure C++, the Qt UI was a clean shell around it, and the two were deliberately kept separate. The natural next step was extending the indexer to handle richer document formats — starting with .docx."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#the-challenge-with-word-documents",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#the-challenge-with-word-documents",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "The Challenge with Word Documents",
+    "text": "The Challenge with Word Documents\nWord documents aren’t a simple text format. A .docx file is actually a ZIP archive containing a collection of XML files. The document content lives inside word/document.xml, wrapped in a hierarchy of XML tags. To extract searchable text, you have to unzip the archive, locate that file, parse the XML, and pull out the text nodes — all before tokenization can even begin.\nThis required two external libraries: miniz for ZIP extraction and pugixml for XML parsing. Both are pure C++ with no external dependencies, which kept the backend clean and Qt-free."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#keeping-the-architecture-clean",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#keeping-the-architecture-clean",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "Keeping the Architecture Clean",
+    "text": "Keeping the Architecture Clean\nThe same separation principle from Part 2 applied here. The new DocxParser lives entirely in the backend — it takes a file path, does its work, and returns a plain std::string of extracted text. Qt never touches it. The Indexer calls it the same way it calls the plain text reader, and the result flows through the same tokenize() pipeline as everything else.\nFrom the Indexer’s perspective, a .docx file is just another source of text. The file type handling is a single branch:\nif (ext == \".txt\" || ext == \".md\") {\n    processFile(entry.path().string());\n} else if (ext == \".docx\") {\n    processDocx(entry.path().string());\n}\nEverything downstream — tokenization, indexing, scoring, snippet extraction — is completely unchanged."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#integrating-the-libraries",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#integrating-the-libraries",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "Integrating the Libraries",
+    "text": "Integrating the Libraries\nGetting miniz and pugixml into the project was more involved than expected. Both libraries ship as multiple files rather than true single-header drops, and the CMake configuration needed explicit source file declarations and language properties to compile the C files correctly in a C++ project. Downloading the full release packages rather than individual files resolved most of the integration friction.\nOnce the libraries were correctly wired into CMakeLists.txt, the actual DocxParser implementation was straightforward — open the ZIP, locate word/document.xml, extract it into memory, parse the XML with pugixml, walk the &lt;w:t&gt; nodes, and concatenate the text content."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#the-application",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#the-application",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "The Application",
+    "text": "The Application\nHere is the main NoteSearch window after indexing a directory containing a mix of .txt, .md, and .docx files:\n \nThe interface is intentionally minimal consisting of a directory picker, a search bar, and a results list. After selecting a folder the index builds immediately and the result area confirms how many unique terms were found across all supported file types.\nSearching across a directory containing both plain text and Word documents returns results from all file types together, ranked by relevance score:\n\n\n\nSearch results across docx and txt files\n\n\nEach result shows the file path, its relevance score, and a snippet preview showing where the term appears in the document. The word count index confirms the breadth of what was indexed."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#reflection",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#reflection",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "Reflection",
+    "text": "Reflection\nThe architectural decision to keep the backend Qt-free continued to pay dividends here. Adding an entirely new file format required no changes to the UI, no changes to the search logic, and no changes to the tokenizer. The only new code was the parser itself and a single branch in the indexer.\nThe library integration was the roughest part of this phase. Working with C libraries inside a C++ CMake project on Windows with MinGW introduced several friction points around file discovery and compilation flags that wouldn’t have been issues on Linux. The lesson is to always download full library releases rather than cherry-picking individual files from a repository."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#whats-next",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#whats-next",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "What’s Next",
+    "text": "What’s Next\nPDF support is the next planned extension, following the same pattern — a pure C++ PdfParser in the backend, no Qt involvement, same tokenization pipeline. Once both formats are supported the application will cover the full range of personal note formats most people actually use."
+  },
+  {
+    "objectID": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#repository",
+    "href": "blog/posts/notesearch/2026-05-06-notesearch-docx-support.html#repository",
+    "title": "NoteSearch Part 3: Extending the Engine to Word Documents",
+    "section": "Repository",
+    "text": "Repository\nFull code: https://github.com/AwstynC/NoteSearch"
   }
 ]
